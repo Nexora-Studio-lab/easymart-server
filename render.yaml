@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: easymart-realtime-server
+    env: node
+    plan: starter
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: easymart-postgres
+          property: connectionString
+      - key: API_SECRET_KEY
+        generateValue: true
+
+databases:
+  - name: easymart-postgres
+    plan: free
+    databaseName: easymart
+    user: easymart_user
